@@ -1,0 +1,21 @@
+syntax = "proto3";
+package proto;
+
+option go_package = "github.com/vivekab/golib/protobuf/protoroot";
+
+enum DbSource {
+  DB_SOURCE_UNSPECIFIED = 0;
+  DB_SOURCE_API = 1;
+  DB_SOURCE_API_LIST = 2;
+}
+
+enum DbMode {
+  DB_MODE_UNSPECIFIED = 0;
+  DB_MODE_WRITE = 1;
+  DB_MODE_READ = 2;
+}
+
+enum TemplateType {
+  TEMPLATE_TYPE_UNSPECIFIED = 0;
+  TEMPLATE_TYPE_STATEMENT = 1;
+}
