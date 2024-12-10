@@ -1,0 +1,11 @@
+syntax = "proto3";
+package proto;
+
+import "google/protobuf/descriptor.proto";
+
+option go_package = "github.com/vivekab/golib/protobuf/protoroot";
+
+extend google.protobuf.FieldOptions {
+  optional bool sensitive = 1000; // sensitive flag is to mask fields that are identities
+  optional bool elongated = 1001; // elongated flag to identify the data as huge and would occupy more space
+}

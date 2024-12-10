@@ -1,0 +1,54 @@
+syntax = "proto3";
+package proto;
+
+import "google/protobuf/descriptor.proto";
+
+option go_package = "github.com/vivekab/golib/protobuf/protoroot";
+
+extend google.protobuf.MessageOptions {
+  repeated MessageValidation message_validate = 1102;
+}
+
+extend google.protobuf.FieldOptions {
+  optional GolibValidation validate = 1002;
+}
+
+message GolibValidation {
+  bool solid_id = 1;
+  bool id_number = 2;
+  bool email = 3;
+  bool phone = 4;
+  bool url = 5;
+  bool external_reference_id = 6;
+  bool metadata = 7;
+  bool amount = 8;
+  bool enum = 9;
+  bool address = 10;
+  string pattern = 11;
+  bool country_code = 13;
+  bool number_string = 14;
+  bool date_of_birth = 15;
+  bool required = 16;
+  int32 min_len = 17;
+  int32 max_len = 18;
+  bool sub_object_validate = 19;
+  bool array = 20;
+  bool required_on_update = 21;
+  bool formation_date = 22;
+  bool id_type_and_num = 23;
+  bool website = 24;
+
+  // required_if: field_name in value
+  // operators supported: in, not_in
+  // values: comma separated values
+  // example: required_if: "status in 0,2"
+  // example: required_if: "status not_in 3"
+  string required_if = 25;
+  bool watchdog_rule = 26;
+}
+
+message MessageValidation {
+  string error_code = 1;
+  string exp = 2;
+  string message = 3;
+}

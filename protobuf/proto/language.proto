@@ -1,0 +1,10 @@
+syntax = "proto3";
+package proto;
+
+option go_package = "github.com/vivekab/golib/protobuf/protoroot";
+
+enum Language {
+  LANGUAGE_UNSPECIFIED = 0;
+  LANGUAGE_EN = 1;
+  LANGUAGE_EN_US = 2;
+}

@@ -1,0 +1,30 @@
+log:
+  level: DEBUG
+
+coreWriteDB:
+  host: 
+  dbname: qa_db
+  port: 5432
+  sslmode: verify-full
+  maxConnections: 5
+  maxIdleConnections: 2
+  maxConnectionLifetime: 3600
+
+apiReadDB:
+  host: 
+  dbname: qa_db
+  port: 5432
+  sslmode: verify-full
+  maxConnections: 5
+  maxIdleConnections: 2
+  maxConnectionLifetime: 3600
+
+
+apiListReadDB:
+  host: 
+  dbname: qa_db
+  port: 5432
+  sslmode: verify-full
+  maxConnections: 5
+  maxIdleConnections: 2
+  maxConnectionLifetime: 3600

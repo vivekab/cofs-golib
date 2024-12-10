@@ -1,0 +1,99 @@
+syntax = "proto3";
+package proto.auth;
+
+import "google/protobuf/descriptor.proto";
+import "google/protobuf/timestamp.proto";
+import "sensitive.proto";
+import "validate.proto";
+
+option go_package = "github.com/vivekab/golib/protobuf/protoroot/auth;protoauth";
+
+enum ApiKeyType {
+  API_KEY_TYPE_UNSPECIFIED = 0;
+  API_KEY_TYPE_STANDARD = 100;
+  API_KEY_TYPE_RESTRICTED = 200;
+}
+
+enum ApiKeyStatus {
+  API_KEY_STATUS_UNSPECIFIED = 0;
+  API_KEY_STATUS_ACTIVE = 100;
+  API_KEY_STATUS_INACTIVE = 200;
+}
+
+enum RequestSource {
+  REQUEST_SOURCE_UNSPECIFIED = 0;
+  REQUEST_SOURCE_CLIENT_API = 1;
+  REQUEST_SOURCE_DASHBOARD = 2;
+  REQUEST_SOURCE_OPS_TOOL = 3;
+  REQUEST_SOURCE_INCOMING_WEBHOOKS = 4;
+}
+
+message IsAllowedRequest {
+  string client_id = 1 [(validate).required = true];
+  string method = 2 [(validate).required = true];
+  RequestSource source = 3 [(validate).required = true];
+}
+
+message IsAllowedResponse {
+  bool allowed = 1;
+  string err_message = 2;
+  int32 retry_after = 3;
+  int32 request_left = 4;
+}
+
+message ValidateAPIKeyRequest {
+  string api_key = 1 [
+    (proto.sensitive) = true,
+    (validate).required = true
+  ];
+  string ip = 2;
+}
+
+message ValidateAPIKeyResponse {
+  string client_id = 1;
+  string client_name = 2;
+}
+
+message GetApiKeysRequest {
+  string client_id = 1 [(validate).required = true];
+}
+
+message GetApiKeysResponse {
+  int32 total = 1;
+  repeated ApiKey keys = 2;
+}
+
+message ApiKey {
+  string id = 1;
+  string client_id = 2;
+  string api_key = 3;
+  ApiKeyStatus status = 4;
+  string created_by = 7;
+  string modified_by = 8;
+  google.protobuf.Timestamp created_at = 9;
+  google.protobuf.Timestamp modified_at = 10;
+}
+
+message DeleteApiKeyRequest {
+  string id = 1 [(validate).required = true];
+  string client_id = 2 [(validate).required = true];
+}
+
+message DeleteApiKeyResponse {}
+
+message CreateApiKeyRequest {
+  string user_id = 1 [(validate).required = true];
+  string created_by = 2;
+}
+
+message CreateApiKeyResponse {
+  ApiKey api_key = 1;
+}
+
+service AuthService {
+  rpc IsAllowed(IsAllowedRequest) returns (IsAllowedResponse);
+  rpc ValidateAPIKey(ValidateAPIKeyRequest) returns (ValidateAPIKeyResponse);
+  rpc GetApiKeys(GetApiKeysRequest) returns (GetApiKeysResponse);
+  rpc DeleteApiKey(DeleteApiKeyRequest) returns (DeleteApiKeyResponse);
+  rpc CreateApiKey(CreateApiKeyRequest) returns (CreateApiKeyResponse);
+}
