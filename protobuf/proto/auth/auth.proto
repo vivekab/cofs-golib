@@ -27,7 +27,7 @@ enum RequestSource {
 }
 
 message IsAllowedRequest {
-  string client_id = 1 [(validate).required = true];
+  string user_id = 1 [(validate).required = true];
   string method = 2 [(validate).required = true];
   RequestSource source = 3 [(validate).required = true];
 }
@@ -48,12 +48,12 @@ message ValidateAPIKeyRequest {
 }
 
 message ValidateAPIKeyResponse {
-  string client_id = 1;
+  string user_id = 1;
   string client_name = 2;
 }
 
 message GetApiKeysRequest {
-  string client_id = 1 [(validate).required = true];
+  string user_id = 1 [(validate).required = true];
 }
 
 message GetApiKeysResponse {
@@ -63,7 +63,7 @@ message GetApiKeysResponse {
 
 message ApiKey {
   string id = 1;
-  string client_id = 2;
+  string user_id = 2;
   string api_key = 3;
   ApiKeyStatus status = 4;
   string created_by = 7;
@@ -74,7 +74,7 @@ message ApiKey {
 
 message DeleteApiKeyRequest {
   string id = 1 [(validate).required = true];
-  string client_id = 2 [(validate).required = true];
+  string user_id = 2 [(validate).required = true];
 }
 
 message DeleteApiKeyResponse {}
